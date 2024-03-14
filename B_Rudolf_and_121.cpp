@@ -3,65 +3,53 @@ using namespace std;
 int main()
 {
   int t;
-  cin>>t;
-  while(t--)
+  while (t--)
   {
     int n;
-    cin>>n;
+    cin >> n;
     int arr[n];
-    for (int i=0;i<n;i++)
+    for (int i = 0; i < n; i++)
     {
         cin>>arr[i];
     }
-    int big = arr[1];
-    int index = 1;
-    bool flag = true;
-    bool all_value_zero ;
-    while(!flag && !all_value_zero){
-        all_value_zero = true;
-
-        for(int i=0;i<n;i++)
+    bool f = false;
+    bool all_value_zero = false;
+    int max = arr[0];
+    int max_index = arr[0];
+    for(int i = 0; i<n; i++)
+    {
+        if(arr[i] > max)
         {
-            if(arr[i]!=0)
-            {
-                all_value_zero = false;
-                break;
-            }
-            // else if(i==n-1)
-            // {
-            //     all_value_zero = true;
-            // }
+            max = arr[i];
+            max_index = i;
         }
-        for(int i=0;i<n;i++)
-        {
-            if(arr[i]>big)
-            {
-                big = arr[i];
-                index = i;
-            }
-            if(arr[i]<0)
-            {
-                flag = false;
-                break;
-            }
-        }
-        if ( index > 0 && index < n-1)
-        {
-            arr[index] = arr[index]-2;
-            arr[index-1] = arr[index-1]-1;
-            arr[index+1] = arr[index+1]-1;
-            big = arr[0];
-
-            if(arr[index]<0 || arr[index-1]<0||arr[index+1]<0)
-        {
-            break;
-        }
-        }
-        
+    }
+    if (max_index==0 || max_index == n-1)
+    {
+        f=true;
+        break;
 
     }
-    if(flag && all_value_zero) cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+    else{
+      arr[max_index] = arr[max_index]-2;
+      arr[max_index+1] = arr[max_index]-1;
+      arr[max_index-1] = arr[max_index]-1;
+
+      if(arr[max_index]<0 || arr[max_index+1]<0 ||arr[max_index-1]<0)
+      {
+        f = true;
+        break;
+      }
+      all_value_zero = true;
+      for(int i=0;i<n;i++)
+      {
+        if(arr[i]!=0)
+        {
+          all_value_zero = false;
+        }
+      }
+    }
+    
   }
   return 0;
 }
